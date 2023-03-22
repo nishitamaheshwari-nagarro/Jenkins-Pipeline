@@ -1,0 +1,31 @@
+server:
+  port: 8084
+  
+spring:
+  application:
+    name: API_GATEWAY
+    
+  cloud:
+    gateway:
+      routes:
+      - id: PRODUCT-CATALOG-SERVICE
+        uri:
+          lb://PRODUCT-CATALOG-SERVICE
+        predicates:
+        - Path=/catalog/** 
+        
+      - id: PRODUCT-DETAIL-SERVICE
+        uri:
+          lb://PRODUCT-DETAIL-SERVICE
+        predicates:
+        - Path=/products/** 
+        
+      - id: USER-SERVICE
+        uri:
+          lb://USER-SERVICE
+        predicates:
+        - Path=/accounts/** 
+        
+eureka:
+  instance:
+    prefer-ip-address: true
